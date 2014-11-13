@@ -1,0 +1,23 @@
+{
+  "name": "WebManager",
+  "version": "0.0.0",
+  "description": "Fast & Fun manager game that you can play in the browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webmanager",
+    "javascript",
+    "html5"
+  ],
+  "author": "Pedro Vieira",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-less": "~0.12.0",
+    "grunt-contrib-requirejs": "~0.4.4",
+    "grunt-contrib-cssmin": "~0.10.0",
+    "connect": "~2.27.3"
+  }
+}
