@@ -3,7 +3,7 @@ define(['app/modules/match.simulator/app'],
 
         var _initialize = function () {
 
-			alert("INIT| Main module");
+			
             //First Init Sub Modules
             matchSimulatorModule.initialize("webManagerLite.matchsimulator");
 

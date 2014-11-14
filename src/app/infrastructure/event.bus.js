@@ -19,7 +19,7 @@ define(function () {
         
         var rootElement = angular.element(document.getElementsByTagName("body")[0]);
         if (!(rootElement && rootElement.scope())) {
-            throw new Error("WebGIS: Root scope unreachable!");
+            throw new Error("Root scope unreachable!");
         }
 
         var scope = rootElement.scope();
@@ -42,7 +42,7 @@ define(function () {
     };
 
     function _angularUnsubscribe() {
-        throw new Error("WebGIS: To be implemented _angularUnsubscribe()");
+        throw new Error("To be implemented _angularUnsubscribe()");
     }
 
     return {

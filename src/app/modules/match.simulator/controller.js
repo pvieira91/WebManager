@@ -7,6 +7,9 @@ define(['eventBus'], function (eventBus) {
             $scope.test = data;
         });
 		
+
+        
+
     };
 
     var _initialize = function (app) {

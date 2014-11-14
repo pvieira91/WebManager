@@ -1,341 +1,186 @@
-<script>
+ï»¿<style>
+    .match-simulator .header{
+        height:70px;
+        background-color:rgb(193,193,193)!important;
+    }
+
+    .match-simulator .team-home div{
+        padding:15px;
+        font-size:2em;
+        font-weight: bold;
+    }
+
+    .match-simulator .team-visitor{
+        height:70px;
+        border: 1px solid rgb(193,193,193);
+        background-color: rgb(222,222,222);
+        color:rgb(193,193,193);
+    }
+    .match-simulator .team-home{
+        height:70px;
+        border: 1px solid rgb(193,193,193);
+        
+        background-color: rgb(222,222,222);
+        color:rgb(193,193,193);
+    }
+
+    .match-simulator .team-visitor div{
+        padding:15px;
+        font-size:2em;
+        font-weight: bold;
+    }
+
+    .match-simulator .result div{
+        color:white;
+        font-size:2em;
+        padding:15px;
+        text-align: center;
+        font-weight: bold;
+
+    }
+    .component-panel{
+        border:1px solid #B8B8B8;
+        background-color:#B8B8B8;
+        border-radius:5px
+    }
+    
+    .current-time{
+        padding-right: 0px;
+        border:none;
+    }
+    .current-time div{
+        background-color:#e1e1e8;
+        vertical-align: middle;
+        text-align: center;
+        height:72px;
+        padding-left:5px;
+        font-size:2em;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 2.5em;
+        color: yellow;
+        text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
+    }
+
+    .match-simulator .body{
+        position: absolute;
+        height: calc(100% - 90px);
+        margin-top: 10px;
+        padding: 10px;
+        width: calc(100% - 10px);
+        background-color: rgb(222,222,222);
+        border: 1px solid rgb(193,193,193);
+    }
+
+    .match-simulator .match-occurrences{
+        background-color: white;
+        border: 1px solid rgb(193,193,193);
+        height: calc(100% - 60px);
+    }
+
+    .match-simulator .ball-position{
+        margin-top:15px;
+        height:30px;
+        background-color: white;
+        border: 1px solid rgb(193,193,193);
+    }
+
+    .match-simulator .comments{
+        position: absolute;
+        top: 40%;
+        height: 90px;
+        background-color: gray;
+        z-index: 1000;
+        width: calc(100% - 50px);
+        padding: 15px;
+        font-size: 2em;
+        color: white;
+        text-align: center;
+    }
+
+    .match-simulator .progress{
+        height: 100%!important;
+    }
+
+    .match-simulator .progress-bar{
+        -webkit-transition-duration: 0.1s;
+        transition-duration: 0.1s;
+    }
+
+</style>
+
+<div class="match-simulator">
+
+    <div class="row header"> 
+
+        <div class="col-xs-12 score" ng-controller="ScoreController">
+            <div class="row">
+                <div class="col-xs-5 team-home">
+                    <div style="padding:15px">
+                        {{homeTeam.name}}
+                    </div>
+                </div>
+            
+                <div class="col-xs-2 result">
+                    <div>
+                        {{homeTeam.goals}}
+                        -
+                        {{visitorTeam.goals}}
+                    </div>
+                </div>
+              
+                <div class="col-xs-5 team-visitor">
+                    <div>
+                        {{visitorTeam.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="col-xs-2 current-time">
+                <div>
+                        27
+                </div>
+        </div> -->
+      
+    </div>
+
+    <div class="row body">
+        <div class="container-fluid" style="height:100%">
+            <div class="row match-occurrences">
+                <div class="col-xs-6">Golo Alex Sandro</div>
+                <div class="col-xs-6">ExpulsÃ£o Jackson Martinez</div>
+            </div>
+
+             <div class="row ball-position" ng-controller="BallPositionController">
+                <progressbar value="position"></progressbar>
+                <!--<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                    <span class="sr-only">60% Complete</span>
+                </div>-->
+            </div>
+
+            <div class="comments" ng-controller="CommentsController">
+                <strong>{{comment.prefix}}</strong>{{comment.text}}
+            </div>
+
+        </div>
+
+       
+
+     <!--    <div class="match-comment">
+        </div>-->
+ 
+    </div>
+
+</div>
+
+
+<!--<script>
 /*
-Lesões, golos, amarelos, penalties, livres
+LesÃµes, golos, amarelos, penalties, livres
 */
 
-var mentalityEnum={
-    defensive:1,
-    normal:2,
-    offensive:3
-};
 
-var cont = 0;
-
-var teamA = {
-    name:"guimaraes",
-    atributtes:{
-        home: 20,
-        strength: 13,
-        moral:17
-    },
-    tactic:{
-        defensive:13,
-        offensive:7,
-        mentality: mentalityEnum.defensive,
-        attackOverall:3,
-        defenseOverall:12,
-        normalOverall: 5,
-        onChange:function(){
-            alert("Recalculate tactics");
-        }
-    },
-    overall:1,
-    goals:0
-};
-
-var teamB = {
-    name:"porto",
-    atributtes:{
-        home: 15,
-        strength: 17,
-        moral:18,
-        mentality: mentalityEnum.attacking
-    },
-    tactic:{
-        defensive:12,
-        offensive:16,
-        mentality: mentalityEnum.offensive,
-        attackOverall:12,
-        defenseOverall:3,
-        normalOverall: 5,
-        onChange:function(){
-            alert("Recalculate tactics");
-        }
-    },
-    overall:1,
-    goals:0
-}
-
-var simulator={
-    home: 0.04,
-    strength: 0.9,
-    moral: 0.06
-}
-
-function Simulate(homeTeam, visitorTeam){
-    
-    homeTeam.overall = (simulator.home * homeTeam.atributtes.home) * 1 + (simulator.strength * homeTeam.atributtes.strength) + (simulator.moral * homeTeam.atributtes.moral);
-    
-    visitorTeam.overall = (simulator.home * visitorTeam.atributtes.home) * 0 + (simulator.strength * visitorTeam.atributtes.strength) + (simulator.moral * visitorTeam.atributtes.moral);
-    
-    var dif= Math.abs(homeTeam.overall-visitorTeam.overall)/20;
-    
-    var a = (homeTeam.overall/(homeTeam.overall+visitorTeam.overall));
-    var b = (visitorTeam.overall/(homeTeam.overall+visitorTeam.overall));
-        
-    launchEvent(fieldEnum.MIDFIELD, teamA, teamB);
-    /*if(homeTeamOdds>visitorTeamOdds){
-     homeTeamOdds = dif;   
-    }else{
-    }
-    
-    homeTeamOdds = (1/3) + dif;
-    visitorTeamOdds = (1/3) - dif;
-    
-    alert(dif);
-    alert(homeTeamOdds);
-    alert(visitorTeamOdds);*/
-}
-
-var fieldEnum = {
-    DEFENSE_A : 1,
-    MIDFIELD: 2,
-    DEFENSE_B : 3
-};
-
-function launchEvent(field, teamA, teamB){
-    
-    if(cont>20){
-        $("#state").css("backgroundColor", "red");
-        $("#state").html("Final Time!");
-        return;
-    }
-    cont++;
-    
-    switch(field){
-        case fieldEnum.DEFENSE_A:
-            setTimeout(function(){eventDefense(teamB,teamA);},500);
-            break;
-        case fieldEnum.DEFENSE_B:
-            setTimeout(function(){eventDefense(teamA, teamB);},500);
-            break;    
-        case fieldEnum.MIDFIELD:
-            setTimeout(function(){eventMidfield(teamA, teamB);},500);;
-            break;
-    };
-    
-}
-
-function getOffensiveValueFromMentality(mentality){
-    var value = 0;
-    
-    switch(mentality){
-        case mentalityEnum.defensive:
-            value = 3;
-            break;
-        case mentalityEnum.offensive:
-            value = 12;
-            break;    
-        case mentalityEnum.normal:
-            value = 5;
-            break;
-        default:
-            throw new Error("Incorrect value!!");
-    }
-    
-    return value;
-}
-
-
-function getDeffensiveValueFromMentality(mentality){
-    var value = 0;
-    
-    switch(mentality){
-        case mentalityEnum.defensive:
-            value = 12;
-            break;
-        case mentalityEnum.offensive:
-            value = 3;
-            break;    
-        case mentalityEnum.normal:
-            value = 5;
-            break;
-        default:
-            throw new Error("Incorrect value!!");
-    }
-    
-    return value;
-}
-
-function eventDefense(teamA, teamB){
-   
-    
-     var teamAQuality = teamA.overall * 0.75;
-    var deffensiveValueFromMentality =getDeffensiveValueFromMentality(teamA.tactic.mentality);
-    
-     var teamADefensiveTactic = (teamA.tactic.defensive*(2/4) + deffensiveValueFromMentality*(2/4))*0.25;
-    
-    var teamAGoodEvent = teamAQuality + teamADefensiveTactic;
-    
-    var teamBQuality = teamB.overall * 0.75;
-    var offensiveValueFromMentality = getOffensiveValueFromMentality(teamB.tactic.mentality);
-    
-    var teamBAttackingTactic = (teamB.tactic.offensive*(2/4) + offensiveValueFromMentality*(2/4))*0.25;
-    var teamBGoodEvent  = teamBQuality + teamBAttackingTactic;
-    
-    var probTeamA = (teamAGoodEvent/(teamAGoodEvent+teamBGoodEvent)) * 100;
-    var probTeamB = (teamBGoodEvent/(teamAGoodEvent+teamBGoodEvent)) * 100;
-    
-    var random = Math.floor((Math.random() * 100) + 1);
-    
-    if(random<probTeamA){
-        //teamA
-        
-        var newRandom = Math.floor((Math.random() * 100) + 1);
-        
-        if(random<((1/3)*100)){
-            //lance perigoso, bola ao meio
-            addComment(teamA.name+" ATTACK | Quase golo, bola ao meio");
-            launchEvent(fieldEnum.MIDFIELD, teamA, teamB);
-        }
-        else if(random<((1/3)*100)){
-            //canto, defesa A
-            addComment(teamA.name+" ATTACK | Canto!");
-            launchEvent(fieldEnum.DEFENSE_A, teamA, teamB);
-        }
-        else{
-            //Golo
-            //bola o centro
-            addComment(teamA.name+" ATTACK | Golo, bola ao meio");
-            teamA.goals++;
-            $("#"+teamA.name+"-res").html(teamA.goals)
-            launchEvent(fieldEnum.MIDFIELD, teamA, teamB);
-        }
-    }else{
-        var newRandom = Math.floor((Math.random() * 100) + 1);
-        
-        if(random<((4/10)*100)){
-            //bola continua na defesa
-            
-            addComment(teamB.name+" DEFEND| Continuam a defender");
-            eventDefense(teamA, teamB);
-        }
-        else if(random<((5/10)*100)){
-            //bola para o meio
-            addComment(teamB.name+" DEFEND | Bem defendido, bola ao meio");
-            eventMidfield(teamA, teamB);
-        }
-        else{
-            //contra ataque, bola para defesa adversiario
-            addComment(teamB.name+" DEFEND | Contra ataque Perigoso A>B");
-            eventDefense(teamB, teamA);
-        }
-    }
-    
-   
-    //se equipa A muito defensiva, % da bola ficar na sua defesa é grande, mas probabilidade de sofrer é reduzida
-    
-    //se equipa B tiver pouca capacidade de ataque, % de golo é muito reduzida e a % da bola ir para meio campo é grande
-    
-    //acontecimento = acontecimento + posição final da bola;
-}
-
-function eventMidfield(teamA, teamB){
-    
-    
-    var probTeamA = teamA.overall/(teamA.overall + teamB.overall);
-    var probTeamB = teamB.overall/(teamA.overall + teamB.overall);
-    
-     var random = Math.floor((Math.random() * 100) + 1);
-    
-    if(random<probTeamA){
-         //teamA   
-        var newRandom = Math.floor((Math.random() * 100) + 1);
-        //se tactica defensiva + prob de ficar no meio campo
-        //se tactica ofensiva + prob de ir para o ataque ou perder a bola
-        //se tactica normal + prob 
-        var goToAttack = teamA.tactic.attackOverall;
-        var goToMid = teamA.tactic.normalOverall;
-        var goToDefense = teamA.tactic.defenseOverall;
-        
-        var probAttack = (goToAttack) / (goToAttack + goToMid + goToDefense);
-        var probMid = (goToMid) / (goToAttack + goToMid + goToDefense);
-        var probDefense = (goToDefense) / (goToAttack + goToMid + goToDefense);       
-        
-        var newRandom = Math.floor((Math.random() * 100) + 1);
-        
-        if(newRandom<probAttack){
-            //attack
-            launchEvent(fieldEnum.DEFENSE_B, teamA, teamB);
-        }else if(newRandom>probAttack && newRandom < (probAttack+probMid)){
-            //mid
-            launchEvent(fieldEnum.MIDFIELD, teamA, teamB);
-        }
-        else{
-            launchEvent(fieldEnum.DEFENSE_A, teamA, teamB);
-        }
-        
-        
-    }else{
-         //teamB   
-        var newRandom = Math.floor((Math.random() * 100) + 1);
-        //se tactica defensiva + prob de ficar no meio campo
-        //se tactica ofensiva + prob de ir para o ataque ou perder a bola
-        //se tactica normal + prob 
-        var goToAttack = teamB.tactic.attackOverall;
-        var goToMid = teamB.tactic.normalOverall;
-        var goToDefense = teamB.tactic.defenseOverall;
-        
-        var probAttack = (goToAttack) / (goToAttack + goToMid + goToDefense);
-        var probMid = (goToMid) / (goToAttack + goToMid + goToDefense);
-        var probDefense = (goToDefense) / (goToAttack + goToMid + goToDefense);       
-        
-        var newRandom = Math.floor((Math.random() * 100) + 1);
-        
-        if(newRandom<probAttack){
-            //attack
-            addComment(teamA.name+" | Go to Attack");
-            launchEvent(fieldEnum.DEFENSE_B, teamA, teamB);
-            //eventDefense(teamB, teamA);
-        }else if(newRandom>probAttack && newRandom < (probAttack+probMid)){
-            //mid
-            addComment(teamA.name+" | Stay Mid");
-            launchEvent(fieldEnum.MIDFIELD, teamA, teamB);
-        }
-        else{
-            addComment(teamA.name +" | Lose the ball Mid");
-            launchEvent(fieldEnum.DEFENSE_A, teamA, teamB);
-        }
-        
-    }
-        
-        //probabilidade de ficar no meio
-        //20% para isto
-        //se tacticas normais + 
-        //se tactica A defesa e B attack, +B
-        //se tactica B defesa e A attack, A+
-        //
-    
-}
-
-
-
-$(function(){
-    $("#start").on("click", function(){
-        Simulate(teamA, teamB);
-        $("#state").css("backgroundColor", "green");
-        $("#state").html("Live!");
-    });
-    $("#reset").on("click", function(){ 
-       $("#guimaraes-res").html("0");
-       $("#porto-res").html("0");
-        teamA.goals = 0;
-        teamB.goals = 0;
-        cont = 0;
-        
-        $("#state").css("backgroundColor", "gray");
-        $("#state").html("Pre Match!");
-        $("#comments").html('<div class="comment">Pré-Match</div>');
-        
-    });
-    
-});
-
-function addComment(text){
-	var actualHtml = $("#comments").html();
-	var newComment = '<div class="comment">'+text+'</div>';
-	$("#comments").html(newComment+actualHtml);
-};
 /*
 for(var i=0; i<1; i++){
     teamA.goals = 0;
@@ -385,5 +230,8 @@ div.comment{
     
 </div>
 <div id="comments" style="width:438px; display:block;border:1px solid gray; max-height:150px; overflow:auto">
-    <div class="comment">Pré-Match</div>
+    <div class="comment">PrÃ©-Match</div>
 </div>
+
+
+-->
