@@ -5,7 +5,8 @@ define(["eventBus"], function(eventBus){
 
 		$scope.events=[{player:"Jogador A",time:"23",type:"1"},
 		{player:"Jogador B",time:"32",type:"2"},
-		{player:"Jogador C",time:"70",type:"3"}];
+		{player:"Jogador C",time:"70",type:"3"},
+		{player:"Jogador X",time:"70",type:"4"}];
 		
 
 };
