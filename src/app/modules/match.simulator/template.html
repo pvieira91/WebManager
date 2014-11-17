@@ -149,11 +149,12 @@
         <div class="container-fluid" style="height:100%">
             <div class="row match-occurrences">
                 <div ng-controller="HomeTeamEventController" class="col-xs-5">
-                   <!-- <match-Event player="event.player" time="event.time" ng-repeat="event in events"></match-Event>-->
-                   <match-Event></match-Event>
+                   <match-Event player="event.player" time="event.time" type="event.type" ng-repeat="event in events"></match-Event>
                 </div>
                 <div class="col-xs-2"></div>
-                <div  class="col-xs-5">Expulsão Jackson Martinez</div>
+                <div ng-controller="VisitorTeamEventController" class="col-xs-5">
+                   <match-Event player="event.player" time="event.time" type="event.type" ng-repeat="event in events"></match-Event>
+                </div>
             </div>
 
              <div class="row ball-position" ng-controller="BallPositionController">

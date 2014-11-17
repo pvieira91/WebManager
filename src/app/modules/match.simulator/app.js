@@ -2,12 +2,13 @@ define(['app/modules/match.simulator/controller',
 		'app/modules/match.simulator/score.controller',
 		'app/modules/match.simulator/comments.controller',
 		'app/modules/match.simulator/ball.position.controller',
-		'app/modules/match.simulator/home.Team.Event.Controller',
+		'app/modules/match.simulator/home.team.event.controller',
+		'app/modules/match.simulator/visitor.team.event.controller',
 
 		'app/modules/match.simulator/service'
 
 
-	], function (controller, scoreController, commentsController, ballPositionController,homeTeamEventController, service) {
+	], function (controller, scoreController, commentsController, ballPositionController,homeTeamEventController,visitorTeamEventController, service) {
 
 		function _initialize(moduleName) {
 			
@@ -21,6 +22,7 @@ define(['app/modules/match.simulator/controller',
 			commentsController.initialize(app);
 			ballPositionController.initialize(app);
 			homeTeamEventController.initialize(app);
+			visitorTeamEventController.initialize(app);
 			service.initialize(app);
 
 		};
